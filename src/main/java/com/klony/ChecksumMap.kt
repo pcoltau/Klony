@@ -1,24 +1,21 @@
 package com.klony
 
+import com.klony.utils.Checksum
 import net.boeckling.crc.CRC64
 import java.io.File
-
-typealias Checksum = Long
-typealias FileSize = Long
 
 /**
  * This class is used to store the checksums for files.
  * The parent class BackedMutableMap has a map, which stores the Checksums for each set of files (with the same checksum).
- * The fileMap contains the checksum and file size for each registered file. The file size is stored 
+ * The visitedFiles contains the set of all added files.
  */
 class ChecksumMap: BackedMutableMap<Checksum, Set<File>>() {
-    private val fileMap = mutableMapOf<File, Pair<Checksum, FileSize>>()
+    private val visitedFiles = mutableSetOf<File>()
 
     fun add(file: File) {
-        if (!fileMap.containsKey(file)) {
+        if (visitedFiles.add(file)) {
             val checksum = calculateChecksum(file)
             addToChecksumMap(checksum, file)
-            fileMap[file] = Pair(checksum, file.length())
         }
     }
 

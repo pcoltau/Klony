@@ -1,5 +1,6 @@
 package com.klony
 
+import com.klony.organiser.ResultOrganizer
 import com.klony.utils.Console
 import com.klony.utils.extensionCheckCaseInsensitive
 import com.xenomachina.argparser.ArgParser
@@ -12,7 +13,7 @@ class KlonyMain {
             val parsedArgs = ArgParser(args).parseInto(::Args)
 
             val formattedExtensions = parsedArgs.includedExtensions.map {
-                it.extensionCheckCaseInsensitive(parsedArgs.caseInsensitive)
+                it.extensionCheckCaseInsensitive(parsedArgs.caseSensitive)
             }
 
             val sizes = mutableMapOf<Long, File>()
@@ -40,7 +41,7 @@ class KlonyMain {
                             checksumMap.add(existingFile)
                         }
                         sizes[size] = file
-                    } else if (file.isDirectory) {
+                    } else if (file.isDirectory && parsedArgs.reportProgress) {
                         // TODO: Performance test the print - perhaps we want to only print every 100ms?
                         Console.erasePreviousLine()
                         Console.printLine("Scanning: $file\r")
@@ -49,15 +50,16 @@ class KlonyMain {
             }
 
             Console.erasePreviousLine()
-            Console.printResult(checksumMap, parsedArgs.outputFormatter)
+            val result = ResultOrganizer.organise(checksumMap, parsedArgs)
+            Console.printResult(result, parsedArgs.outputFormatter)
         }
 
         private fun checkFileExtension(extension: String, parsedArgs: Args, formattedExtensions: List<String>): Boolean {
-            return formattedExtensions.isEmpty() || formattedExtensions.contains(extension.extensionCheckCaseInsensitive(parsedArgs.caseInsensitive))
+            return formattedExtensions.isEmpty() || formattedExtensions.contains(extension.extensionCheckCaseInsensitive(parsedArgs.caseSensitive))
         }
 
         private fun checkFileSizeLimits(size: Long, parsedArgs: Args) =
-                size >= parsedArgs.limitLower && size <= parsedArgs.limitHigher
+                size >= parsedArgs.sizeLimitLower && size <= parsedArgs.sizeLimitHigher
 
         @Suppress("NOTHING_TO_INLINE")
         private inline fun guard(condition: Boolean) = object {
