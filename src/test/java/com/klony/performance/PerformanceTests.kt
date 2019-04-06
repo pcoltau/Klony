@@ -57,7 +57,7 @@ class PerformanceTests {
     }
 
     private fun <T: Any> timeHash(hashType: HashType<T>) {
-        val checksumClassName = hashType.getHashName()
+        val checksumClassName = hashType.getHashName() ?: "Unknown"
         println("Counting # of $checksumClassName checksums in $durationInSec seconds: ")
         val durationInMS = durationInSec * 1000
         val time = Instant.now()

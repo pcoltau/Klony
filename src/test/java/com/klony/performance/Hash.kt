@@ -14,11 +14,11 @@ interface Hash<out T: Any> {
 interface HashType<out T: Any> {
     fun createHash(): Hash<T>
 
-    fun getHashName(): String
+    fun getHashName(): String?
 }
 
 class HashTypeChecksum<T: Checksum>(private val checksumClass: KClass<T>): HashType<Long> {
-    override fun getHashName() = checksumClass.simpleName!!
+    override fun getHashName() = checksumClass.simpleName
 
     override fun createHash(): Hash<Long> {
         return object: Hash<Long> {
