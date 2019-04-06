@@ -1,5 +1,6 @@
 package com.klony.performance
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.time.Duration
@@ -7,6 +8,7 @@ import java.time.Instant
 import java.util.zip.Adler32
 import java.util.zip.CRC32
 
+@Disabled
 class PerformanceTests {
     private val file = File("/Users/pcoltau/VirtualBox VMs/Win7/Win7.vdi")
     private val durationInSec = 10
