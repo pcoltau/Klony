@@ -10,7 +10,7 @@ import java.io.File
 class KlonyMain {
     companion object {
         @JvmStatic fun main(args: Array<String>) = mainBody {
-            val parsedArgs = ArgParser(args).parseInto(::Args)
+            val parsedArgs = ArgParser(args, version = "1.0.0").parseInto(::Args)
 
             val formattedExtensions = parsedArgs.includedExtensions.map {
                 it.extensionCheckCaseInsensitive(parsedArgs.caseSensitive)

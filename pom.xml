@@ -15,11 +15,36 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>MavenCentral</id>
+            <name>Maven repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <!-- Waiting for the following PR to be merged to the official project: https://github.com/xenomachina/kotlin-argparser/pull/70
         <dependency>
             <groupId>com.xenomachina</groupId>
             <artifactId>kotlin-argparser</artifactId>
             <version>2.0.7</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>com.github.pcoltau</groupId>
+            <artifactId>kotlin-argparser</artifactId>
+            <version>feature~add-version-option-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.boeckling</groupId>
