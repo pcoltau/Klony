@@ -52,6 +52,19 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>com.pcoltau</groupId>
+            <artifactId>kotlin-guard</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>com.github.pcoltau</groupId>
+            <artifactId>kotlin-guard</artifactId>
+            <version>0.1.5</version>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>

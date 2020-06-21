@@ -9,7 +9,7 @@ import java.io.File
  * The parent class BackedMutableMap has a map, which stores the Checksums for each set of files (with the same checksum).
  * The visitedFiles contains the set of all added files.
  */
-class ChecksumMap: BackedMutableMap<Checksum, Set<File>>() {
+class ChecksumMap : BackedMutableMap<Checksum, Set<File>>() {
     private val visitedFiles = mutableSetOf<File>()
 
     fun add(file: File) {

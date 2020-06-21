@@ -21,7 +21,7 @@ class Args(parser: ArgParser) {
             help = "The list of directories where the scan will start. " +
                     "One directory must not be within another given directory. " +
                     "Note: There is only support for simple tilde expansion, e.g. ~/ -> /user/myuser/")
-        { File(directoryCheckTilde()).canonicalFile }
+    { File(directoryCheckTilde()).canonicalFile }
             .addValidator {
                 value.forEach { file ->
                     if (!file.exists()) {
@@ -53,17 +53,17 @@ class Args(parser: ArgParser) {
             "--pipe" to ChecksumMapFormatterPipe(),
             help = "Turns on pipeable output format. " +
                     "Without this option, the output will be in a summary format.")
-        .default { ChecksumMapFormatterSummary() }
+            .default { ChecksumMapFormatterSummary() }
 
     val sizeLimitLower by parser.storing("--file_size_lower_limit",
             help = "The lower file size limit in bytes. " +
                     "Files with a file size less than or equal to the lower limit will not be included in scan.")
-        { toLong() }.default { 0 }
+    { toLong() }.default { 0 }
 
     val sizeLimitHigher by parser.storing("--file_size_greater_limit",
             help = "The greater file size limit in bytes. " +
                     "Files with a file size larger than or equal to the higher limit will not be included in scan")
-        { toLong() }.default { Long.MAX_VALUE }
+    { toLong() }.default { Long.MAX_VALUE }
 
     val reportProgress by parser.flagging("--progress",
             help = "Report on the scanning progress. It is not recommended to use this, if you are piping (see --pipe) the output to another process.")
@@ -75,16 +75,17 @@ class Args(parser: ArgParser) {
             help = "The file extension to limit the search to. The expected form is \".jpg\" or just \"jpg\". " +
                     "This option can be used more than once to include different extensions. " +
                     "Note: The extension check is case-insensitive. Use --case_sensitive to make it case-sensitive.")
-        {
-            this.extensionCheckDot()
-        }.default { Collections.emptyList() }
+    {
+        this.extensionCheckDot()
+    }.default { Collections.emptyList() }
 
     val cloneSorting by parser.storing("--clone_sorting",
             help = "Sort order of each individual clone set. " +
                     "Possible values are: " +
                     Sorting.help())
     {
-        Sorting.fromString(this) ?: throw InvalidArgumentException("Unknown sort order: $this\nThe possible values are: \n" + Sorting.help(System.lineSeparator()))
+        Sorting.fromString(this)
+                ?: throw InvalidArgumentException("Unknown sort order: $this\nThe possible values are: \n" + Sorting.help(System.lineSeparator()))
     }.default { Sorting.default }
 
     val cloneCountFilter by parser.storing("--clone_count_filter",
@@ -94,7 +95,8 @@ class Args(parser: ArgParser) {
                     "Example: '--clone_count_filter ==5' will only include clone sets of exactly 5 items. " +
                     "If not set, there is an implicit (default) value of '${CloneCountFilter.default}' (a clone set with only 1 item isn't really a clone).")
     {
-        CloneCountFilter.fromString(this) ?: throw InvalidArgumentException("Unable to parse clone_count_filter: $this\nThe possible values takes the form of: \n" + CloneCountFilter.help(System.lineSeparator()))
+        CloneCountFilter.fromString(this)
+                ?: throw InvalidArgumentException("Unable to parse clone_count_filter: $this\nThe possible values takes the form of: \n" + CloneCountFilter.help(System.lineSeparator()))
     }.default { CloneCountFilter.default }
 
     val cloneCountLimit by parser.storing("--clone_count_limit",
@@ -104,7 +106,7 @@ class Args(parser: ArgParser) {
 
     val cloneCountOffset by parser.storing("--clone_count_offset",
             help = "The index offset of the items included in each individual clone set. " +
-                    "Example: '--clone_count_offset 1' will only NOT include the first item (after sorting and filter is applied) in the clone set. ")
+                    "Example: '--clone_count_offset 1' will NOT include the first item (after sorting and filter is applied) in the clone set. ")
     { toLong() }.default { 0 }
 
     private fun String.extensionCheckDot() =

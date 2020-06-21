@@ -3,13 +3,15 @@ package com.klony
 import com.klony.organiser.ResultOrganizer
 import com.klony.utils.Console
 import com.klony.utils.extensionCheckCaseInsensitive
+import com.pcoltau.guard.guard
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.mainBody
 import java.io.File
 
 class KlonyMain {
     companion object {
-        @JvmStatic fun main(args: Array<String>) = mainBody {
+        @JvmStatic
+        fun main(args: Array<String>) = mainBody {
             val parsedArgs = ArgParser(args, version = "1.0.0").parseInto(::Args)
 
             val formattedExtensions = parsedArgs.includedExtensions.map {
@@ -54,23 +56,10 @@ class KlonyMain {
             Console.printResult(result, parsedArgs.outputFormatter)
         }
 
-        private fun checkFileExtension(extension: String, parsedArgs: Args, formattedExtensions: List<String>): Boolean {
-            return formattedExtensions.isEmpty() || formattedExtensions.contains(extension.extensionCheckCaseInsensitive(parsedArgs.caseSensitive))
-        }
+        private fun checkFileExtension(extension: String, parsedArgs: Args, formattedExtensions: List<String>) =
+                formattedExtensions.isEmpty() || formattedExtensions.contains(extension.extensionCheckCaseInsensitive(parsedArgs.caseSensitive))
 
         private fun checkFileSizeLimits(size: Long, parsedArgs: Args) =
                 size >= parsedArgs.sizeLimitLower && size <= parsedArgs.sizeLimitHigher
-
-        @Suppress("NOTHING_TO_INLINE")
-        private inline fun guard(condition: Boolean) = object {
-            inline fun otherwise(otherwise: () -> Unit) {
-                if (!condition) {
-                    otherwise()
-                    check(false) {
-                        "If a guard fails, the 'otherwise' block must return!"
-                    }
-                }
-            }
-        }
     }
 }

@@ -3,7 +3,7 @@ package com.klony
 /**
  * This class is an implementation of the Map interface with a protected mutable map that can be changed by implementing classes, but not from outside the class
  */
-abstract class BackedMutableMap<K: Any, V: Any>: Map<K, V> {
+abstract class BackedMutableMap<K : Any, V : Any> : Map<K, V> {
     protected val backedMap = mutableMapOf<K, V>()
 
     override val entries get() = backedMap.entries

@@ -8,16 +8,12 @@ enum class CloneCountOperator(val stringOperator: String, val comparator: (Int) 
     GREATER_THAN_OR_EQUAL(">=", { it >= 0 }),
     LESS_THAN_OR_EQUAL("<=", { it <= 0 });
 
-    fun <T: Comparable<T>> compare(lhs: T, rhs: T): Boolean {
-        return comparator(lhs.compareTo(rhs))
-    }
+    fun <T: Comparable<T>> compare(lhs: T, rhs: T) = comparator(lhs.compareTo(rhs))
 
     companion object {
-        private val operatorMap = CloneCountOperator.values().associateBy(CloneCountOperator::stringOperator)
+        private val operatorMap = values().associateBy(CloneCountOperator::stringOperator)
 
-        fun valueOfOrNull(string: String): CloneCountOperator? {
-            return operatorMap[string]
-        }
+        fun valueOfOrNull(string: String) = operatorMap[string]
     }
 
 }

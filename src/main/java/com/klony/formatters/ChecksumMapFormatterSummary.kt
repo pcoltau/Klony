@@ -5,7 +5,7 @@ import com.klony.utils.resolveToRealPath
 import com.klony.utils.terminal.Terminal
 import com.klony.utils.toStringShortened
 
-class ChecksumMapFormatterSummary: ChecksumMapFormatter {
+class ChecksumMapFormatterSummary : ChecksumMapFormatter {
     override fun toString(result: OrganisedResult): String {
         val terminalDimension = Terminal.getDimensionOrDefault()
         val fullLine = "-".repeat(terminalDimension.width)
